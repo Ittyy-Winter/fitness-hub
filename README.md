@@ -55,7 +55,8 @@ Access app that only lets the owner's email in. Only Claude's callback URLs can 
    connector in it.
 3. Scheduled tasks: `prompts/daily.md` every day at 09:00 and `prompts/weekly.md` on Mondays at
    09:30, both with the connector enabled.
-4. For meal photos: enable code execution and allow `mcp.<domain>` under network egress.
+4. For meal photos: in the Project settings → Environment, add a cloud environment whose Allowed
+   domains include `mcp.<domain>`. Without it meals still log, just without the photo.
 
 Writes are audited in `mcp_audit`. Revoke Claude's access by removing the connector, or with
 `DELETE FROM oauth_client` in Postgres.
