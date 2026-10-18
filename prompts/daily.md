@@ -30,5 +30,5 @@ Analyse yesterday for my Fitness Hub dashboard.
 5. If there was a run, also save `kind: run`. If there was a gym session, also save
    `kind: workout`. Each gets a short title and summary of its own.
 
-Write in English. If there is no data at all for yesterday, save a one-line daily analysis
+Write in Thai: titles, summaries and recommendations. Keep units and tool names as they are. If there is no data at all for yesterday, save a one-line daily analysis
 saying so, so the dashboard shows the task ran.

@@ -30,4 +30,4 @@ Review last week (Monday to Sunday) for my Fitness Hub dashboard.
      when its data is too thin to judge.
    - `recommendations`: at most 3 things for this week.
 
-Write in English.
+Write in Thai: titles, summaries and recommendations. Keep units and tool names as they are.
