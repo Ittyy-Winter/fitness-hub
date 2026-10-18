@@ -1,0 +1,25 @@
+{
+  "name": "fitness-hub",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "worker": "node src/worker.ts",
+    "api": "node src/api.ts",
+    "cli": "node src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --test-concurrency=1 test/*.test.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.5",
+    "hono": "4.13.13",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
+    "typescript": "7.0.2"
+  }
+}

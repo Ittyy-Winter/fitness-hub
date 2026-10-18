@@ -4,10 +4,13 @@ Design: [Fitness Hub — Spec Sheet.md](./Fitness%20Hub%20—%20Spec%20Sheet.md)
 
 | Path | What |
 | --- | --- |
-| `compose.yaml` | All services. Week 1: openGym, Postgres, cloudflared |
+| `compose.yaml` | All services: openGym, Postgres, cloudflared, hub worker + API |
 | `.env` | Secrets and hostnames (gitignored, template in `.env.example`) |
-| `db/migrations/` | Postgres schema. `001_init.sql` runs automatically on an empty volume |
+| `db/migrations/` | Postgres schema, applied in order by the hub on startup |
+| `hub/` | TypeScript sync worker + Hub API (Node 24, Hono, pg). See below |
 | `scripts/backup.sh` | Nightly backup, run by cron at 03:00 → `backups/` |
+| `scripts/hub-cli.sh` | Hub commands: pair openGym, sync now, sync status |
+| `scripts/hub-dev.sh` | Run hub tooling (tests, typecheck) in the Node 24 image |
 | `data/opengym/` | openGym's data (accounts, passkeys, workouts). Back this up |
 
 ## Week 1 setup
@@ -25,14 +28,38 @@ Design: [Fitness Hub — Spec Sheet.md](./Fitness%20Hub%20—%20Spec%20Sheet.md)
 6. **Off-machine backup:** install rclone, `rclone config` a remote (Google Drive or R2), and
    set `BACKUP_RCLONE_REMOTE`. Until then backups stay on this laptop only.
 
+## Week 2 setup: sync
+
+1. **openGym:** in openGym, Settings → Pair the mobile app, then within 5 minutes:
+   `scripts/hub-cli.sh opengym-pair <CODE>`.
+2. **Google Health:** in Google Cloud Console, enable the Google Health API, set the OAuth
+   app to *In production* (Testing mode expires the refresh token every 7 days), add the four
+   `googlehealth.*.readonly` scopes and create a Web client with redirect URI
+   `http://localhost:8081/auth/google/callback`. Put its id and secret in `.env`,
+   `docker compose up -d`, then open http://localhost:8081/auth/google on this laptop.
+3. Check: `scripts/hub-cli.sh sync`, then `scripts/hub-cli.sh status`.
+
+The worker queues both syncs at 21:00 every night (and catches up if the laptop was off).
+Google's nightly run also backfills history 90 days at a time, up to two years.
+
+## Hub development
+
+```bash
+scripts/hub-dev.sh npm run typecheck
+HUB_DEV_DB=hub_test scripts/hub-dev.sh npm test   # wipes and uses the hub_test database
+docker compose up -d --build hub-worker hub-api    # deploy a change
+```
+
 ## Day to day
 
 ```bash
 docker compose ps                 # status
 docker compose logs -f opengym-api
+scripts/hub-cli.sh status         # last sync per source
 ./scripts/backup.sh               # backup now
 ```
 
 Updating openGym: bump `OPENGYM_VERSION` in `.env`, then `docker compose pull && docker compose up -d`.
-Read its release notes first, since API changes can break the gym sync.
+Read its release notes first, since API changes can break the gym sync, and rebuild the exercise
+names (`hub/scripts/build-opengym-catalogue.ts`).
 `docker compose restart` does not re-read `.env`; use `docker compose up -d`.
