@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Nightly backup: Postgres dump + openGym data dir, kept BACKUP_KEEP_DAYS days,
+# Nightly backup: Postgres dump + openGym data dir + meal photos, kept BACKUP_KEEP_DAYS days,
 # optionally copied off the machine with rclone (spec: Non-functional → Backup).
 set -euo pipefail
 
@@ -14,6 +14,7 @@ mkdir -p "$out"
 # Read through the containers so file ownership inside the volumes never matters.
 docker compose exec -T db pg_dump -U hub -d hub --format=custom > "$out/hub.dump"
 docker compose exec -T opengym-api tar czf - -C /data . > "$out/opengym-data.tar.gz"
+tar czf "$out/meal-photos.tar.gz" -C data/meal-photos .
 
 # Fail loudly on an empty artifact rather than keep a useless backup.
 for f in "$out"/*; do

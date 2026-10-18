@@ -73,6 +73,7 @@ test('keeps runs, skips other exercise, converts units', () => {
     hr_zone_min: { light: 5, moderate: 15, vigorous: 9, peak: 1 },
     kcal: 403,
     elevation_m: 23.4,
+    splits: null,
   })
 })
 

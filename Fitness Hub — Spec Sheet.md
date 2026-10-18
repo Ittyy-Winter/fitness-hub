@@ -262,8 +262,8 @@ Hub ใช้ Postgres เก็บทุกอย่างตามวันใ
 
 **Open questions**
 
-- [ ] Claude.ai custom connector รองรับ auth แบบไหนบ้าง (OAuth / header) ตอนนี้
+- [x] Claude.ai custom connector รองรับ auth แบบไหนบ้าง (OAuth / header) ตอนนี้ → OAuth 2.1 + PKCE ผ่าน Dynamic Client Registration หรือ Client ID Metadata Document, authless และ static header (beta) · callback `https://claude.ai/api/mcp/auth_callback` · hub ใช้ DCR โดยหน้า `/authorize` อยู่หลัง Cloudflare Access
 - [ ] OAuth app แบบ personal ของ Google Health ต้องผ่าน verification ไหม หรืออยู่ Testing ได้ตลอด
 - [x] openGym API ใช้ auth แบบ session cookie อย่างเดียว หรือมี API token ให้ hub ใช้ → มี bearer token จากการ pair แบบเดียวกับแอปมือถือ (ดู Data sources)
 - [ ] Code execution ใน claude.ai เข้าถึงรูปที่ส่งในแชตเป็นไฟล์ได้ไหม (รวมถึงบนแอป Android และใน Project) และ allowlist โดเมนเองได้ไหม ถ้าไม่ได้ ให้เก็บแค่ผลประเมิน (`photo_url` เป็น null)
-- [ ] Timeout ของ tool call ใน claude.ai ยาวพอให้ `trigger_sync` รอ 25 วินาทีไหม
+- [x] Timeout ของ tool call ใน claude.ai ยาวพอให้ `trigger_sync` รอ 25 วินาทีไหม → ได้ timeout คือ 240 วินาทีต่อ tool call

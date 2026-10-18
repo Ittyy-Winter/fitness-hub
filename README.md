@@ -7,7 +7,8 @@ Design: [Fitness Hub — Spec Sheet.md](./Fitness%20Hub%20—%20Spec%20Sheet.md)
 | `compose.yaml` | All services: openGym, Postgres, cloudflared, hub worker + API |
 | `.env` | Secrets and hostnames (gitignored, template in `.env.example`) |
 | `db/migrations/` | Postgres schema, applied in order by the hub on startup |
-| `hub/` | TypeScript sync worker + Hub API (Node 24, Hono, pg). See below |
+| `hub/` | TypeScript sync worker, Hub API and remote MCP server (Node 24, Hono, pg, MCP SDK) |
+| `prompts/` | Instructions for the claude.ai Project and the daily/weekly scheduled tasks |
 | `scripts/backup.sh` | Nightly backup, run by cron at 03:00 → `backups/` |
 | `scripts/hub-cli.sh` | Hub commands: pair openGym, sync now, sync status |
 | `scripts/hub-dev.sh` | Run hub tooling (tests, typecheck) in the Node 24 image |
@@ -41,6 +42,23 @@ Design: [Fitness Hub — Spec Sheet.md](./Fitness%20Hub%20—%20Spec%20Sheet.md)
 
 The worker queues both syncs at 21:00 every night (and catches up if the laptop was off).
 Google's nightly run also backfills history 90 days at a time, up to two years.
+
+## Week 3 setup: Claude
+
+`hub-mcp` serves `https://mcp.<domain>/mcp` through the tunnel. It is its own OAuth 2.1
+server: claude.ai registers itself, and the approval page (`/authorize`) is behind a Cloudflare
+Access app that only lets the owner's email in. Only Claude's callback URLs can register.
+
+1. claude.ai → Settings → Connectors → Add custom connector. Name `Fitness Hub`, URL
+   `https://mcp.<domain>/mcp`, no advanced settings. Connect, enter the Access email code, Allow.
+2. Create a Project "Fitness Hub", paste `prompts/meal.md` into its instructions and enable the
+   connector in it.
+3. Scheduled tasks: `prompts/daily.md` every day at 09:00 and `prompts/weekly.md` on Mondays at
+   09:30, both with the connector enabled.
+4. For meal photos: enable code execution and allow `mcp.<domain>` under network egress.
+
+Writes are audited in `mcp_audit`. Revoke Claude's access by removing the connector, or with
+`DELETE FROM oauth_client` in Postgres.
 
 ## Hub development
 

@@ -17,6 +17,15 @@ export const config = {
     redirectUri: process.env.GOOGLE_REDIRECT_URI ?? 'http://localhost:8081/auth/google/callback',
   },
   apiPort: Number(process.env.PORT ?? 8081),
+  mcp: {
+    port: Number(process.env.MCP_PORT ?? 8082),
+    // The public origin claude.ai reaches us at; OAuth issuer and resource derive from it.
+    publicUrl: (process.env.MCP_PUBLIC_URL ?? 'http://localhost:8082').replace(/\/$/, ''),
+    // Cloudflare Access guards /authorize (spec: only the owner can grant Claude access).
+    accessTeamDomain: process.env.CF_ACCESS_TEAM_DOMAIN ?? '',
+    accessAud: process.env.CF_ACCESS_AUD ?? '',
+  },
+  photoDir: process.env.PHOTO_DIR ?? '/photos',
   // Nightly sync time, Asia/Bangkok (spec: Data sources → ความถี่).
   nightlySyncAt: process.env.NIGHTLY_SYNC_AT ?? '21:00',
   timeZone: 'Asia/Bangkok',

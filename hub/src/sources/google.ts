@@ -1,4 +1,5 @@
 import { config } from '../config.ts'
+import { addDays, today } from '../dates.ts'
 import { tx, type Queryable } from '../db.ts'
 import { fetchJson, HttpError } from '../http.ts'
 import type { SyncJob } from '../queue.ts'
@@ -28,12 +29,7 @@ export const CONSENT_PATH = '/auth/google'
 
 type GDate = { year: number; month: number; day: number }
 
-export const addDays = (day: string, n: number): string => {
-  const d = new Date(day + 'T00:00:00Z')
-  d.setUTCDate(d.getUTCDate() + n)
-  return d.toISOString().slice(0, 10)
-}
-export const today = (): string => new Date().toLocaleDateString('en-CA', { timeZone: config.timeZone })
+export { addDays }
 const toGDate = (day: string): GDate => {
   const [year, month, day_] = day.split('-').map(Number)
   return { year: year!, month: month!, day: day_! }
@@ -167,6 +163,7 @@ export type GoogleRows = {
     source_id: string; date: string; start_at: string; end_at: string; duration_s: number
     distance_m: number | null; avg_pace_s_per_km: number | null; avg_hr: number | null
     hr_zone_min: Record<string, number> | null; kcal: number | null; elevation_m: number | null
+    splits: unknown[] | null
   }[]
   sleeps: { source_id: string; date: string; start_at: string; end_at: string; stages: object }[]
 }
@@ -245,6 +242,8 @@ export function transform(raw: {
         : null,
       kcal: n(m.caloriesKcal) === null ? null : Math.round(n(m.caloriesKcal)!),
       elevation_m: n(m.elevationGainMillimeters) === null ? null : Math.round(n(m.elevationGainMillimeters)! / 100) / 10,
+      // Kept as Google sends them: no run has come through yet to pin their shape down.
+      splits: Array.isArray(e.splitSummaries) && e.splitSummaries.length ? e.splitSummaries : null,
     })
   }
 
@@ -319,14 +318,16 @@ async function store(db: Queryable, api: Api, start: string, end: string, rows: 
       [start, end, rows.runs.map((r) => r.source_id)])
     for (const r of rows.runs) {
       await c.query(
-        `INSERT INTO run_session (source_id, date, start_at, duration_s, distance_m, avg_pace_s_per_km, avg_hr, max_hr, hr_zone_min, kcal, elevation_m)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-         ON CONFLICT (source_id) DO UPDATE SET date = EXCLUDED.date, start_at = EXCLUDED.start_at,
+        `INSERT INTO run_session (source_id, date, start_at, duration_s, distance_m, avg_pace_s_per_km, avg_hr, max_hr, hr_zone_min, kcal, elevation_m, splits, end_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+         ON CONFLICT (source_id) DO UPDATE SET date = EXCLUDED.date, start_at = EXCLUDED.start_at, end_at = EXCLUDED.end_at,
            duration_s = EXCLUDED.duration_s, distance_m = EXCLUDED.distance_m,
            avg_pace_s_per_km = EXCLUDED.avg_pace_s_per_km, avg_hr = EXCLUDED.avg_hr, max_hr = EXCLUDED.max_hr,
-           hr_zone_min = EXCLUDED.hr_zone_min, kcal = EXCLUDED.kcal, elevation_m = EXCLUDED.elevation_m`,
+           hr_zone_min = EXCLUDED.hr_zone_min, kcal = EXCLUDED.kcal, elevation_m = EXCLUDED.elevation_m,
+           splits = EXCLUDED.splits`,
         [r.source_id, r.date, r.start_at, r.duration_s, r.distance_m, r.avg_pace_s_per_km, r.avg_hr,
-          maxHr.get(r.source_id) ?? null, r.hr_zone_min && JSON.stringify(r.hr_zone_min), r.kcal, r.elevation_m])
+          maxHr.get(r.source_id) ?? null, r.hr_zone_min && JSON.stringify(r.hr_zone_min), r.kcal, r.elevation_m,
+          r.splits && JSON.stringify(r.splits), r.end_at])
     }
     for (const [ts, bpm] of samples) {
       await c.query('INSERT INTO hr_sample (ts, bpm) VALUES ($1, $2) ON CONFLICT (ts) DO UPDATE SET bpm = EXCLUDED.bpm', [ts, bpm])
