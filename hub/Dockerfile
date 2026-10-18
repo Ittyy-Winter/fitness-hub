@@ -13,6 +13,16 @@ WORKDIR /build
 COPY hub/scripts/build-opengym-catalogue.ts scripts/
 RUN mkdir -p src/sources && node scripts/build-opengym-catalogue.ts /opengym/catalogue/exercises
 
+# The dashboard PWA, served by hub-api at fit.<domain>.
+FROM node:24.22.0-alpine AS dashboard
+ARG CLAUDE_PROJECT_URL=
+ARG GYM_URL=
+WORKDIR /dashboard
+COPY dashboard/package.json dashboard/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY dashboard/ ./
+RUN VITE_CLAUDE_PROJECT_URL="$CLAUDE_PROJECT_URL" VITE_GYM_URL="$GYM_URL" npm run build
+
 FROM node:24.22.0-alpine
 ENV NODE_ENV=production
 WORKDIR /app/hub
@@ -21,5 +31,6 @@ RUN npm ci --omit=dev && npm cache clean --force
 COPY db/migrations /app/db/migrations
 COPY hub/src ./src
 COPY --from=catalogue /build/src/sources/opengym-exercises.json ./src/sources/
+COPY --from=dashboard /dashboard/dist ./public
 USER node
 CMD ["node", "src/worker.ts"]

@@ -4,3 +4,8 @@ backups/
 node_modules/
 # Generated from openGym's (AGPL) catalogue at image build time; not ours to relicense.
 hub/src/sources/opengym-exercises.json
+dashboard/dist/
+# Impeccable working files (screenshots are regenerated from the demo database)
+.impeccable/hook.cache.json
+.impeccable/review/
+.impeccable/mocks/

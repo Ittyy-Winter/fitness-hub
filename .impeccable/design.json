@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T07:54:55+00:00",
+  "title": "Design System: Fitness Hub",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Receipt Paper",
+        "canonical": "#fbfbf8",
+        "tonalRamp": [
+          "#17132e",
+          "#2d2470",
+          "#5e5694",
+          "#a7a1c4",
+          "#dcd9e8",
+          "#efeef3",
+          "#fbfbf8",
+          "#ffffff"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Counter Ground",
+        "canonical": "#efeef3",
+        "tonalRamp": [
+          "#17132e",
+          "#2d2470",
+          "#5e5694",
+          "#a7a1c4",
+          "#dcd9e8",
+          "#efeef3",
+          "#fbfbf8",
+          "#ffffff"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#dcd9e8",
+        "tonalRamp": [
+          "#17132e",
+          "#2d2470",
+          "#5e5694",
+          "#a7a1c4",
+          "#dcd9e8",
+          "#efeef3",
+          "#fbfbf8",
+          "#ffffff"
+        ]
+      },
+      "faint": {
+        "role": "neutral",
+        "displayName": "Faded Ink",
+        "canonical": "#a7a1c4",
+        "tonalRamp": [
+          "#17132e",
+          "#2d2470",
+          "#5e5694",
+          "#a7a1c4",
+          "#dcd9e8",
+          "#efeef3",
+          "#fbfbf8",
+          "#ffffff"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Second Ink",
+        "canonical": "#5e5694",
+        "tonalRamp": [
+          "#17132e",
+          "#2d2470",
+          "#5e5694",
+          "#a7a1c4",
+          "#dcd9e8",
+          "#efeef3",
+          "#fbfbf8",
+          "#ffffff"
+        ]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "Thermal Ink",
+        "canonical": "oklch(32.2% 0.126 282.1)",
+        "tonalRamp": [
+          "#17132e",
+          "#2d2470",
+          "#5e5694",
+          "#a7a1c4",
+          "#dcd9e8",
+          "#efeef3",
+          "#fbfbf8",
+          "#ffffff"
+        ]
+      },
+      "night-ground": {
+        "role": "neutral",
+        "displayName": "Night Ground",
+        "canonical": "oklch(20.8% 0.052 287.8)",
+        "tonalRamp": [
+          "#17132e",
+          "#2d2470",
+          "#5e5694",
+          "#a7a1c4",
+          "#dcd9e8",
+          "#efeef3",
+          "#fbfbf8",
+          "#ffffff"
+        ]
+      },
+      "tab-ink-2": {
+        "role": "neutral",
+        "displayName": "Tab Ink, Resting",
+        "canonical": "#bdb7e6",
+        "tonalRamp": [
+          "#17132e",
+          "#2d2470",
+          "#5e5694",
+          "#a7a1c4",
+          "#dcd9e8",
+          "#efeef3",
+          "#fbfbf8",
+          "#ffffff"
+        ]
+      },
+      "end-of-roll-pink": {
+        "role": "tertiary",
+        "displayName": "End-of-Roll Pink",
+        "canonical": "oklch(60.7% 0.216 1.2)",
+        "tonalRamp": [
+          "#2d0008",
+          "#500021",
+          "#8e003b",
+          "#b70059",
+          "#e0307a",
+          "#ff5b9c",
+          "#ff82c0",
+          "#ffc9e9"
+        ]
+      },
+      "series-violet": {
+        "role": "secondary",
+        "displayName": "Chart Violet",
+        "canonical": "oklch(50.9% 0.198 281.8)",
+        "tonalRamp": [
+          "#0e003f",
+          "#201161",
+          "#3b1ca5",
+          "#5646cc",
+          "#746bf3",
+          "#948fff",
+          "#b7b5ff",
+          "#e0e4ff"
+        ]
+      },
+      "series-green": {
+        "role": "secondary",
+        "displayName": "Chart Green",
+        "canonical": "oklch(58.2% 0.115 166.8)",
+        "tonalRamp": [
+          "#001602",
+          "#003418",
+          "#005434",
+          "#007553",
+          "#239873",
+          "#50bc96",
+          "#77e1b9",
+          "#9effde"
+        ]
+      },
+      "series-violet-dark": {
+        "role": "secondary",
+        "displayName": "Chart Violet (dark mode)",
+        "canonical": "#8c7ff0",
+        "tonalRamp": [
+          "#0e003f",
+          "#201161",
+          "#3b1ca5",
+          "#5646cc",
+          "#746bf3",
+          "#948fff",
+          "#b7b5ff",
+          "#e0e4ff"
+        ]
+      },
+      "series-green-dark": {
+        "role": "secondary",
+        "displayName": "Chart Green (dark mode)",
+        "canonical": "#26a07c",
+        "tonalRamp": [
+          "#001602",
+          "#003418",
+          "#005434",
+          "#007553",
+          "#239873",
+          "#50bc96",
+          "#77e1b9",
+          "#9effde"
+        ]
+      },
+      "zone-1": {
+        "role": "secondary",
+        "displayName": "Zone 1, Light",
+        "canonical": "#b0a6ee",
+        "tonalRamp": [
+          "#0e003f",
+          "#201161",
+          "#3f2fa8",
+          "#6a5adf",
+          "#8c7ff0",
+          "#b0a6ee",
+          "#d8d2f7",
+          "#efecfc"
+        ]
+      },
+      "zone-2": {
+        "role": "secondary",
+        "displayName": "Zone 2, Moderate",
+        "canonical": "#8c7ff0",
+        "tonalRamp": [
+          "#0e003f",
+          "#201161",
+          "#3f2fa8",
+          "#6a5adf",
+          "#8c7ff0",
+          "#b0a6ee",
+          "#d8d2f7",
+          "#efecfc"
+        ]
+      },
+      "zone-3": {
+        "role": "secondary",
+        "displayName": "Zone 3, Vigorous",
+        "canonical": "#6a5adf",
+        "tonalRamp": [
+          "#0e003f",
+          "#201161",
+          "#3f2fa8",
+          "#6a5adf",
+          "#8c7ff0",
+          "#b0a6ee",
+          "#d8d2f7",
+          "#efecfc"
+        ]
+      },
+      "zone-4": {
+        "role": "secondary",
+        "displayName": "Zone 4, Peak",
+        "canonical": "#3f2fa8",
+        "tonalRamp": [
+          "#0e003f",
+          "#201161",
+          "#3f2fa8",
+          "#6a5adf",
+          "#8c7ff0",
+          "#b0a6ee",
+          "#d8d2f7",
+          "#efecfc"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "figure-xl": {
+        "displayName": "Figure XL",
+        "purpose": "KCAL LEFT on the slip; one per screen at most."
+      },
+      "figure-l": {
+        "displayName": "Figure L",
+        "purpose": "PROTEIN LEFT, latest-run figures, three-up figure groups."
+      },
+      "figure-m": {
+        "displayName": "Figure M",
+        "purpose": "Figures at the right end of rows; line-item kcal."
+      },
+      "figure-s": {
+        "displayName": "Figure S",
+        "purpose": "Units, times, chart ticks, receipt labels, score readouts."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles on Training, Running, Body, Insights."
+      },
+      "title-slip": {
+        "displayName": "Slip Title",
+        "purpose": "'Today' at the head of the slip."
+      },
+      "title-analysis": {
+        "displayName": "Analysis Title",
+        "purpose": "Claude's Thai headline; loose leading for tone marks."
+      },
+      "title-section": {
+        "displayName": "Section Title",
+        "purpose": "Section heads."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "UI copy."
+      },
+      "prose": {
+        "displayName": "Prose",
+        "purpose": "Analysis text, max 65ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Row subtitles, legends, figure labels, table headers."
+      },
+      "tab": {
+        "displayName": "Tab",
+        "purpose": "Tab labels; 700 when current."
+      }
+    },
+    "shadows": [
+      {
+        "name": "slip-drop",
+        "value": "drop-shadow(0 1px 1px rgb(45 36 112 / 0.1)) drop-shadow(0 8px 14px rgb(45 36 112 / 0.14))",
+        "purpose": "filter on the slip wrapper only; traces the serrated mask."
+      },
+      {
+        "name": "tooltip-float",
+        "value": "0 1px 1px rgb(45 36 112 / 0.08), 0 6px 18px -6px rgb(45 36 112 / 0.22)",
+        "purpose": "Chart tooltips, light mode."
+      },
+      {
+        "name": "tooltip-float-dark",
+        "value": "0 1px 1px rgb(0 0 0 / 0.3), 0 8px 24px -8px rgb(0 0 0 / 0.6)",
+        "purpose": "Chart tooltips, dark mode."
+      }
+    ],
+    "motion": [
+      {
+        "name": "paper-feed",
+        "value": "0.7s cubic-bezier(0.16, 1, 0.3, 1); clip-path inset(0 0 100% 0) to inset(0), translateY(-12px) to none",
+        "purpose": "New meal lines print onto the slip from the top edge."
+      },
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Paper-feed and the 0.25s disclosure chevron rotation."
+      },
+      {
+        "name": "stale-fade",
+        "value": "opacity 0.2s, to 0.6",
+        "purpose": "Main column while data refreshes."
+      },
+      {
+        "name": "sync-spin",
+        "value": "1s linear infinite rotate",
+        "purpose": "Sync now glyph while a sync runs."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation and transition durations 0.01ms",
+        "purpose": "Under prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "rail",
+        "value": "960px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pill Link",
+      "kind": "button",
+      "refersTo": "pill-link",
+      "description": "Primary outbound action (Open Claude, openGym).",
+      "html": "<a class=\"ds-pill\" href=\"#\">Open Claude</a>",
+      "css": ".ds-pill{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:var(--ink,#2d2470);color:var(--paper,#fbfbf8);font:600 0.875rem/1.5 var(--sans,sans-serif);text-decoration:none;white-space:nowrap;} .ds-pill:hover{background:var(--ink-2,#5e5694);} .ds-pill:focus-visible{outline:2px solid var(--series-1,#5a4bd1);outline-offset:2px;}"
+    },
+    {
+      "name": "Sync Icon Button",
+      "kind": "button",
+      "refersTo": "icon-button",
+      "description": "44px circular icon button; Sync now in the top bar.",
+      "html": "<button class=\"ds-icon-btn\" aria-label=\"Sync now\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/></svg></button>",
+      "css": ".ds-icon-btn{display:inline-grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink,#2d2470);cursor:pointer;} .ds-icon-btn:hover{background:var(--rule,#dcd9e8);} .ds-icon-btn:focus-visible{outline:2px solid var(--series-1,#5a4bd1);outline-offset:2px;}"
+    },
+    {
+      "name": "Text Button",
+      "kind": "button",
+      "refersTo": null,
+      "description": "Underlined text action for expanding content.",
+      "html": "<button class=\"ds-text-btn\">Read all and the recommendations</button>",
+      "css": ".ds-text-btn{border:0;background:none;padding:6px 0;font:600 1rem/1.5 var(--sans,sans-serif);color:var(--ink,#2d2470);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;cursor:pointer;} .ds-text-btn:hover{color:var(--ink-2,#5e5694);} .ds-text-btn:focus-visible{outline:2px solid var(--series-1,#5a4bd1);outline-offset:2px;border-radius:4px;}"
+    },
+    {
+      "name": "Segmented Filter",
+      "kind": "chip",
+      "refersTo": "segment",
+      "description": "Pill filter row; pressed segment fills with ink.",
+      "html": "<div class=\"ds-seg\"><button aria-pressed=\"true\">All</button><button aria-pressed=\"false\">Daily</button><button aria-pressed=\"false\">Weekly</button></div>",
+      "css": ".ds-seg{display:flex;gap:6px;} .ds-seg button{min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--rule,#dcd9e8);background:transparent;color:var(--ink,#2d2470);font:500 0.875rem/1 var(--sans,sans-serif);cursor:pointer;} .ds-seg button:hover{border-color:var(--faint,#a7a1c4);} .ds-seg button[aria-pressed='true']{background:var(--ink,#2d2470);color:var(--paper,#fbfbf8);border-color:var(--ink,#2d2470);} .ds-seg button:focus-visible{outline:2px solid var(--series-1,#5a4bd1);outline-offset:2px;}"
+    },
+    {
+      "name": "Tab Bar",
+      "kind": "nav",
+      "refersTo": "tab-bar",
+      "description": "Solid ink field with five tabs; current tab in paper.",
+      "html": "<nav class=\"ds-tabs\"><a href=\"#\" aria-current=\"page\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z\"/><path d=\"M8 9h8M8 13h6\"/></svg>Today</a><a href=\"#\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"><path d=\"M6 12h12M4 9v6M20 9v6M2 11v2M22 11v2\"/></svg>Training</a><a href=\"#\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"><path d=\"M4 4h16v16H4zM8 9h8M8 13h8M8 17h5\"/></svg>Insights</a></nav>",
+      "css": ".ds-tabs{display:grid;grid-template-columns:repeat(3,1fr);height:64px;background:var(--ink,#2d2470);} .ds-tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#bdb7e6;text-decoration:none;font:500 0.75rem/1.2 var(--sans,sans-serif);} .ds-tabs a:hover{color:#fbfbf8;} .ds-tabs a[aria-current='page']{color:#fbfbf8;font-weight:700;} .ds-tabs a:focus-visible{outline:2px solid #fbfbf8;outline-offset:-4px;}"
+    },
+    {
+      "name": "Stat Row with Meter",
+      "kind": "custom",
+      "refersTo": "meter",
+      "description": "Hairline-ruled row: sans label, mono figure, exact-scale meter.",
+      "html": "<dl class=\"ds-stat\"><dt>Running</dt><dd>11.9<span>km of 15</span></dd><span class=\"ds-meter\"><span style=\"width:79%\"></span></span></dl>",
+      "css": ".ds-stat{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:4px 12px;padding:12px 0;margin:0;border-top:1px solid var(--rule,#dcd9e8);border-bottom:1px solid var(--rule,#dcd9e8);color:var(--ink,#2d2470);font:400 1rem/1.5 var(--sans,sans-serif);} .ds-stat dt{font-weight:500;} .ds-stat dd{margin:0;font-family:var(--mono,monospace);font-stretch:87.5%;font-size:0.9375rem;font-variant-numeric:tabular-nums;} .ds-stat dd span{font-size:0.75rem;color:var(--ink-2,#5e5694);margin-left:2px;} .ds-meter{grid-column:1/-1;height:4px;background:var(--rule,#dcd9e8);border-radius:2px;position:relative;overflow:hidden;} .ds-meter>span{position:absolute;inset:0 auto 0 0;background:var(--bar,#2d2470);border-radius:0 2px 2px 0;}"
+    },
+    {
+      "name": "The Slip",
+      "kind": "card",
+      "refersTo": "slip",
+      "description": "Signature receipt: torn edges, meal line with exact-share rule, change figure.",
+      "html": "<div class=\"ds-slip-wrap\"><section class=\"ds-slip\"><header class=\"ds-slip-head\"><h1>Today</h1><p>SUN, 18 OCT</p></header><hr class=\"ds-tear\"><div class=\"ds-line\"><span class=\"ds-t\">07:40</span><span>Rice and chicken</span><span class=\"ds-k\">620</span><span class=\"ds-rule\"><span style=\"width:24%\"></span></span></div><hr class=\"ds-tear\"><div class=\"ds-change\"><span class=\"ds-fig\">1,040</span><span class=\"ds-lab\">KCAL LEFT</span></div></section></div>",
+      "css": ".ds-slip-wrap{filter:drop-shadow(0 1px 1px rgb(45 36 112 / 0.1)) drop-shadow(0 8px 14px rgb(45 36 112 / 0.14));} .ds-slip{--tooth:9px;background:#fbfbf8;color:#2d2470;padding:27px 22px 31px;font:400 1rem/1.5 var(--sans,sans-serif);-webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/18px 51% repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/18px 51% repeat-x;mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/18px 51% repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/18px 51% repeat-x;} .ds-slip-head{text-align:center;padding-bottom:14px;} .ds-slip-head h1{margin:0;font-size:1.5rem;font-weight:700;line-height:1.2;} .ds-slip-head p,.ds-lab,.ds-t{margin:0;font-family:var(--mono,monospace);font-stretch:87.5%;font-size:0.75rem;letter-spacing:0.04em;color:#5e5694;} .ds-tear{border:0;border-top:1.5px dashed #a7a1c4;margin:0;} .ds-line{display:grid;grid-template-columns:3.6em 1fr auto;gap:4px 10px;align-items:baseline;padding:10px 0 8px;} .ds-line:hover span:nth-child(2){text-decoration:underline;text-decoration-color:#a7a1c4;} .ds-k{font-family:var(--mono,monospace);font-stretch:87.5%;font-size:0.9375rem;} .ds-rule{grid-column:2/4;height:3px;background:#dcd9e8;border-radius:2px;position:relative;} .ds-rule>span{position:absolute;inset:0 auto 0 0;background:#2d2470;border-radius:2px;} .ds-change{display:grid;padding-top:16px;} .ds-fig{font-family:var(--mono,monospace);font-stretch:87.5%;font-size:3.5rem;font-weight:600;line-height:1;letter-spacing:-0.04em;} .ds-lab{color:#2d2470;margin-top:6px;}"
+    },
+    {
+      "name": "Chart Tooltip",
+      "kind": "custom",
+      "refersTo": "tooltip",
+      "description": "Paper tooltip floating over charts; stays paper in dark mode.",
+      "html": "<div class=\"ds-tip\"><span class=\"ds-tip-l\">Sat, 17 Oct</span><span class=\"ds-tip-r\"><i style=\"background:#5a4bd1\"></i>Distance <strong>7.54</strong> km</span></div>",
+      "css": ".ds-tip{display:grid;gap:2px;min-width:8rem;background:#fbfbf8;color:#2d2470;border-radius:6px;padding:8px 10px;box-shadow:0 1px 1px rgb(45 36 112 / 0.08),0 6px 18px -6px rgb(45 36 112 / 0.22);font:400 0.8125rem/1.5 var(--sans,sans-serif);} .ds-tip-l{color:#5e5694;font-size:0.75rem;} .ds-tip-r{display:flex;align-items:center;gap:6px;} .ds-tip-r i{width:12px;height:12px;border-radius:3px;display:inline-block;} .ds-tip strong{font-family:var(--mono,monospace);font-stretch:87.5%;font-weight:600;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Till Roll",
+    "overview": "**Creative North Star: \"The Till Roll\"**\n\nThe dashboard is printed, not rendered. Purple thermal ink sits on cool white paper, and every neutral in the interface is a step on one fixed ramp running from paper to ink. The Today screen is a literal receipt: a paper slip with serrated torn edges, meals as line items with a rule drawn to their exact share of the day's target, a dashed tear before the totals, and what is left of the day printed big like change due. The other tabs are plain product screens in the same ink and the same two faces; they borrow the ink, the hairline rules and the mono figures, but not the receipt grammar.\n\nDensity is low and vertical. One column, at most 40rem wide, stacked sections separated by generous space and divided internally by single hairline rules instead of cards. Numbers are always set in a condensed monospace at one of four sizes, so figures line up and read as printed output; words, including Claude's Thai analysis, are set in a rounded Thai-capable sans. Colour beyond the ink is functional only: two chart series, a one-hue violet ramp for heart-rate zones, and a single pink that means \"nearly out or over\".\n\nThe system rejects rings, stat tiles and grids of identical cards. Data is shown as rows, bars drawn to exact scale, and charts with a table fallback.",
+    "keyCharacteristics": [
+      "One fixed paper-to-ink neutral ramp; dark mode reuses it plus one night ground.",
+      "Figures in condensed Martian Mono at exactly four sizes; text in Anuphan.",
+      "Hairline-ruled rows, never cards; the slip is the only raised object.",
+      "Bars and rules drawn to exact proportion of a target.",
+      "Solid ink-purple tab field at the bottom on phones, a left rail on desktop.",
+      "Pink reserved for one state."
+    ],
+    "rules": [
+      {
+        "name": "The Fixed Ramp Rule",
+        "body": "Every neutral is one of paper, ground, rule, faint, ink-2, ink, plus night-ground in dark mode. No tints, no opacity-mixed greys; a new surface picks a step.",
+        "section": "colors"
+      },
+      {
+        "name": "The End-of-Roll Rule",
+        "body": "Pink means only \"nearly out or over\". It never decorates, never marks a link, never colours a chart series.",
+        "section": "colors"
+      },
+      {
+        "name": "The Slip Stays Paper Rule",
+        "body": "In dark mode the slip and chart tooltips keep paper ground and thermal-purple ink; only the counter around them goes dark.",
+        "section": "colors"
+      },
+      {
+        "name": "The Four Figures Rule",
+        "body": "Numbers are set in mono at figure-s, figure-m, figure-l or figure-xl, nothing in between. Words never use the mono except as labels printed alongside data: receipt labels on the slip, score readouts beside Claude's analysis, the PR tag.",
+        "section": "typography"
+      },
+      {
+        "name": "The Receipt Caps Rule",
+        "body": "Uppercase mono with 0.04em tracking is printed data, never a heading: the slip's date line and totals (EATEN, KCAL LEFT), the score readout under Claude's analysis (RECOVERY 70), the PR tag. Section and page labels are sentence-case sans, and nothing sits above a title as a label.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Slip Rule",
+        "body": "The slip is the only raised paper object in the product. Sections elsewhere are never boxed, filled or shadowed.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** pick every neutral from the paper-to-ink ramp; in dark mode add only night-ground.",
+      "**Do** set every number in Martian Mono at 87.5% width with tabular numerals, at one of the four figure sizes.",
+      "**Do** draw bars, line rules and meters to exact proportion of their target, capped at 100%.",
+      "**Do** divide content with 1px rule hairlines between rows instead of boxing it.",
+      "**Do** keep the slip paper with thermal-purple ink in dark mode.",
+      "**Do** give every chart a table view and use the zone ramp in order for HR intensity.",
+      "**Do** honour reduced motion: the paper-feed and every transition collapse to near zero."
+    ],
+    "donts": [
+      "**Don't** use End-of-Roll Pink for anything other than nearly out or over.",
+      "**Don't** build rings, stat tiles or grids of identical cards.",
+      "**Don't** add a second raised surface; the slip is the only shadowed object besides tooltips.",
+      "**Don't** carry the slip's grammar (torn edges, dashed tears, line items, change block) onto tabs other than Today.",
+      "**Don't** put an uppercase label above a title; uppercase mono is reserved for printed data.",
+      "**Don't** introduce intermediate figure sizes or set running text in the mono.",
+      "**Don't** colour HR zones categorically; they are one violet hue stepping darker."
+    ]
+  }
+}

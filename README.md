@@ -2,12 +2,22 @@
 
 Design: [Fitness Hub — Spec Sheet.md](./Fitness%20Hub%20—%20Spec%20Sheet.md). Runs on this laptop with Docker Compose.
 
+<p>
+  <img src="docs/screenshots/today.png" width="24%" alt="Today: the day's meals printed as a receipt, with kcal and protein left">
+  <img src="docs/screenshots/training.png" width="24%" alt="Training: latest session and working sets per muscle">
+  <img src="docs/screenshots/running.png" width="24%" alt="Running: latest run, heart-rate zones and weekly distance">
+  <img src="docs/screenshots/today-dark.png" width="24%" alt="Today in dark mode">
+</p>
+
+<sub>Screenshots use synthetic demo data (`hub/scripts/seed-demo.ts`).</sub>
+
 | Path | What |
 | --- | --- |
 | `compose.yaml` | All services: openGym, Postgres, cloudflared, hub worker + API |
 | `.env` | Secrets and hostnames (gitignored, template in `.env.example`) |
 | `db/migrations/` | Postgres schema, applied in order by the hub on startup |
 | `hub/` | TypeScript sync worker, Hub API and remote MCP server (Node 24, Hono, pg, MCP SDK) |
+| `dashboard/` | The dashboard PWA (React, Vite, Recharts), built into the hub image and served by `hub-api` |
 | `prompts/` | Instructions for the claude.ai Project and the daily/weekly scheduled tasks |
 | `scripts/backup.sh` | Nightly backup, run by cron at 03:00 → `backups/` |
 | `scripts/hub-cli.sh` | Hub commands: pair openGym, sync now, sync status |
@@ -61,12 +71,41 @@ Access app that only lets the owner's email in. Only Claude's callback URLs can 
 Writes are audited in `mcp_audit`. Revoke Claude's access by removing the connector, or with
 `DELETE FROM oauth_client` in Postgres.
 
+## Week 4 setup: dashboard
+
+`hub-api` serves the dashboard PWA and its read-only API at `https://fit.<domain>`. The whole
+host is a Cloudflare Access application, and `hub-api` also verifies the Access JWT on every
+request that isn't addressed to localhost, so nothing reaches the data without the sign-in.
+
+1. Cloudflare Zero Trust → Access → Applications: a self-hosted app for `fit.<domain>` (whole
+   host), a policy allowing only your email, session length to taste (30 days here). Copy its
+   Application Audience tag into `CF_ACCESS_DASHBOARD_AUD` in `.env`.
+2. On the tunnel, add `fit.<domain>` → `http://hub-api:8081`.
+3. `docker compose up -d --build hub-api`.
+4. On the Pixel, open `https://fit.<domain>` in Chrome, sign in with the email code, then
+   ⋮ → Add to Home screen.
+
+Optional: set `CLAUDE_PROJECT_URL` to your Project's link so "Open Claude" lands in it.
+
 ## Hub development
 
 ```bash
 scripts/hub-dev.sh npm run typecheck
 HUB_DEV_DB=hub_test scripts/hub-dev.sh npm test   # wipes and uses the hub_test database
 docker compose up -d --build hub-worker hub-api    # deploy a change
+```
+
+Dashboard, with live reload against the running hub API:
+
+```bash
+cd dashboard && npm install && npm run dev          # http://localhost:5173
+```
+
+Screenshots and demos use synthetic data, never real data. To fill a demo database:
+
+```bash
+docker compose exec db createdb -U hub hub_demo
+HUB_DEV_DB=hub_demo scripts/hub-dev.sh node scripts/seed-demo.ts
 ```
 
 ## Day to day

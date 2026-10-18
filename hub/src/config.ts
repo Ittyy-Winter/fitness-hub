@@ -25,6 +25,13 @@ export const config = {
     accessTeamDomain: process.env.CF_ACCESS_TEAM_DOMAIN ?? '',
     accessAud: process.env.CF_ACCESS_AUD ?? '',
   },
+  dashboard: {
+    // Cloudflare Access application for fit.<domain>; every request from outside this machine
+    // must carry its JWT.
+    accessAud: process.env.CF_ACCESS_DASHBOARD_AUD ?? '',
+    // The built PWA (dashboard/dist), copied in by the Dockerfile.
+    publicDir: process.env.DASHBOARD_DIR ?? './public',
+  },
   photoDir: process.env.PHOTO_DIR ?? '/photos',
   // Nightly sync time, Asia/Bangkok (spec: Data sources → ความถี่).
   nightlySyncAt: process.env.NIGHTLY_SYNC_AT ?? '21:00',

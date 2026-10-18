@@ -4,3 +4,5 @@ data
 backups
 **/node_modules
 hub/test
+dashboard/dist
+.impeccable
