@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
 process.env.DATABASE_URL ??= 'postgres://unused'
-const { transform, pieces, addDays } = await import('../src/sources/google.ts')
+const { transform, pieces, addDays, localDay } = await import('../src/sources/google.ts')
 
 const day = (d: string) => {
   const [year, month, dd] = d.split('-').map(Number)
@@ -47,7 +47,8 @@ test('keeps runs, skips other exercise, converts units', () => {
         name: 'users/1/dataTypes/exercise/dataPoints/abc',
         exercise: {
           exerciseType: 'RUNNING',
-          interval: { startTime: '2026-10-17T23:00:00Z', endTime: '2026-10-17T23:35:00Z', civilStartTime: day('2026-10-18') },
+          // Real responses carry no civilStartTime, only the offset (+07:00 here).
+          interval: { startTime: '2026-10-17T23:00:00Z', startUtcOffset: '25200s', endTime: '2026-10-17T23:35:00Z', endUtcOffset: '25200s' },
           activeDuration: '1800s',
           metricsSummary: {
             distanceMillimeters: 5_012_000, caloriesKcal: 402.7, averageHeartRateBeatsPerMinute: '151',
@@ -82,7 +83,7 @@ test('dates sleep by the wake-up day and keeps time asleep', () => {
       name: 'users/1/dataTypes/sleep/dataPoints/s1',
       sleep: {
         type: 'STAGES',
-        interval: { startTime: '2026-10-17T16:10:00Z', endTime: '2026-10-17T23:20:00Z', civilEndTime: day('2026-10-18') },
+        interval: { startTime: '2026-10-17T16:10:00Z', startUtcOffset: '25200s', endTime: '2026-10-17T23:20:00Z', endUtcOffset: '25200s' },
         summary: { minutesAsleep: '401', minutesAwake: '29' },
         stages: [{ type: 'LIGHT', startTime: '2026-10-17T16:10:00Z', endTime: '2026-10-17T16:40:00Z' }],
       },
@@ -93,6 +94,13 @@ test('dates sleep by the wake-up day and keeps time asleep', () => {
     type: 'STAGES', minutesAsleep: 401, minutesAwake: 29,
     stages: [{ type: 'LIGHT', start: '2026-10-17T16:10:00Z', end: '2026-10-17T16:40:00Z' }],
   })
+})
+
+test('derives the local day from an instant and its UTC offset', () => {
+  assert.equal(localDay('2026-10-17T17:30:00Z', '25200s'), '2026-10-18') // 00:30 in Bangkok
+  assert.equal(localDay('2026-10-17T17:30:00Z', '0s'), '2026-10-17')
+  assert.equal(localDay('2026-10-17T02:00:00Z', '-18000s'), '2026-10-16') // travelling: UTC-5
+  assert.equal(localDay('2026-10-17T17:30:00Z', '25200s', day('2026-10-20')), '2026-10-20') // civil wins
 })
 
 test('splits ranges into API-sized pieces', () => {

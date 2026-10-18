@@ -174,6 +174,14 @@ export type GoogleRows = {
 const n = (v: unknown): number | null => (v == null || v === '' || Number.isNaN(Number(v)) ? null : Number(v))
 const seconds = (duration: unknown): number | null => n(typeof duration === 'string' ? duration.replace(/s$/, '') : null)
 const civilDay = (civil: { date?: GDate } | undefined): string | null => (civil?.date ? fromGDate(civil.date) : null)
+// Sessions carry an instant plus the UTC offset the user was in ("25200s"), not always the
+// civil time the docs list. The local day is the instant shifted by that offset.
+export const localDay = (time: string | undefined, offset: string | undefined, civil?: { date?: GDate }): string | null => {
+  if (civil?.date) return fromGDate(civil.date)
+  if (!time) return null
+  const shift = seconds(offset) ?? 0
+  return new Date(Date.parse(time) + shift * 1000).toISOString().slice(0, 10)
+}
 
 /** Raw Google data points → our rows. Pure, so it is unit-tested against fixtures. */
 export function transform(raw: {
@@ -200,7 +208,7 @@ export function transform(raw: {
   // Weight: the first reading of each day (the morning weigh-in), never carried forward.
   const firstWeight = new Map<string, { at: string; kg: number }>()
   for (const p of raw.weight) {
-    const day = civilDay(p.weight?.sampleTime?.civilTime)
+    const day = localDay(p.weight?.sampleTime?.physicalTime, p.weight?.sampleTime?.utcOffset, p.weight?.sampleTime?.civilTime)
     const grams = n(p.weight?.weightGrams)
     const at = p.weight?.sampleTime?.physicalTime
     if (!day || grams === null || !at) continue
@@ -215,7 +223,7 @@ export function transform(raw: {
     if (!e || !RUN_TYPES.has(e.exerciseType) || !p.name) continue
     const start = e.interval?.startTime
     const end = e.interval?.endTime
-    const date = civilDay(e.interval?.civilStartTime)
+    const date = localDay(start, e.interval?.startUtcOffset, e.interval?.civilStartTime)
     if (!start || !end || !date) continue
     const m = e.metricsSummary ?? {}
     const duration = seconds(e.activeDuration) ?? (Date.parse(end) - Date.parse(start)) / 1000
@@ -243,7 +251,7 @@ export function transform(raw: {
   const sleeps: GoogleRows['sleeps'] = []
   for (const p of raw.sleep) {
     const s = p.sleep
-    const date = civilDay(s?.interval?.civilEndTime) // the wake-up day
+    const date = localDay(s?.interval?.endTime, s?.interval?.endUtcOffset, s?.interval?.civilEndTime) // the wake-up day
     if (!s || !p.name || !date || !s.interval.startTime || !s.interval.endTime) continue
     sleeps.push({
       source_id: p.name,
