@@ -1,0 +1,74 @@
+name: fitness-hub
+
+# Week 1: openGym (gym.<domain>) + Postgres + Cloudflare Tunnel.
+# Hub API, sync worker, MCP and dashboard join this file in later weeks.
+
+services:
+  # openGym backend: passkey auth + per-user JSON state in ./data/opengym.
+  opengym-api:
+    image: ghcr.io/duartesantos8/opengym-api:${OPENGYM_VERSION}
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      DATA_DIR: /data
+      TRUST_PROXY: 1
+      RP_ID: ${GYM_HOST}
+      ORIGIN: https://${GYM_HOST}
+      RP_NAME: openGym
+      # First profile registered becomes admin; flip INVITE_ONLY on right after.
+      FIRST_USER_ADMIN: 1
+      INVITE_ONLY: ${OPENGYM_INVITE_ONLY:-0}
+      ALLOW_GUEST: 0
+      # Spec non-goal: no built-in AI coach.
+      COACH_DISABLED: 1
+    volumes:
+      - ./data/opengym:/data
+
+  # openGym frontend (nginx), proxies /api to opengym-api. Single origin for passkeys.
+  opengym-web:
+    image: ghcr.io/duartesantos8/opengym-web:${OPENGYM_VERSION}
+    restart: unless-stopped
+    depends_on:
+      - opengym-api
+    environment:
+      NGINX_PORT: 80
+      BACKEND: opengym-api
+      PORT: 3000
+      RESOLVER: 127.0.0.11
+      # Cloudflare sets this header itself, so it is safe to trust behind the tunnel.
+      CF_CONNECTING_IP: $$http_cf_connecting_ip
+    ports:
+      # Localhost only: the public route is the tunnel.
+      - "127.0.0.1:${GYM_LOCAL_PORT:-8080}:80"
+
+  db:
+    image: postgres:16.15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hub
+      POSTGRES_USER: hub
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TZ: Asia/Bangkok
+      PGTZ: Asia/Bangkok
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Runs only on an empty volume. Later migrations are applied by the hub.
+      - ./db/migrations/001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hub -d hub"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  # Remote-managed tunnel: public hostnames are configured in the Cloudflare dashboard.
+  # Enabled by COMPOSE_PROFILES=tunnel once CLOUDFLARE_TUNNEL_TOKEN is set.
+  cloudflared:
+    image: cloudflare/cloudflared:2026.10.1
+    profiles: [tunnel]
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
+
+volumes:
+  pgdata:
