@@ -108,6 +108,21 @@ docker compose exec db createdb -U hub hub_demo
 HUB_DEV_DB=hub_demo scripts/hub-dev.sh node scripts/seed-demo.ts
 ```
 
+## Reboots and power
+
+Everything comes back after a reboot without logging in: Docker starts at boot, every service
+has `restart: unless-stopped`, and the worker catches up on a nightly sync it missed. The laptop
+must not sleep, so idle sleep is off and closing the lid is ignored:
+
+```bash
+# /etc/systemd/logind.conf.d/lid.conf, applied with: sudo systemctl kill -s HUP systemd-logind
+[Login]
+HandleLidSwitch=ignore
+HandleLidSwitchExternalPower=ignore
+```
+
+After a power cut it only restarts on its own if the BIOS has "power on after AC loss" enabled.
+
 ## Day to day
 
 ```bash
